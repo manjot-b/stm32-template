@@ -122,6 +122,8 @@ $(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.asm
 
 clean:
 	rm -vrf $(OBJ_DIR) $(BINARY_DIR)
+
+cleanall: clean
 	$(MAKE) -C libopencm3 clean
 
 # Flash 64k Device
@@ -132,7 +134,7 @@ flash:	$(BINARY_DIR)/$(BINARY).bin
 bigflash:	$(BINARY_DIR)/$(BINARY).bin
 	$(STFLASH) --flash=128k $(FLASHSIZE) write $^ 0x8000000
 
-.PHONY: clean elf bin hex srec list all libopencm3
+.PHONY: clean cleanall elf bin hex srec list all libopencm3
 
 -include $(OBJS:.o=.d)
 

@@ -16,7 +16,9 @@ BINARY      =  myproject
 SOURCE_DIR  =  myproject
 OBJ_DIR     =  obj
 BINARY_DIR   ?= bin
-SRCFILES    =  $(SOURCE_DIR)/miniblink.c
+SRCFILES    =  $(shell find $(SOURCE_DIR) -name "*.c")
+SRCFILES    +=  $(shell find $(SOURCE_DIR) -name "*.cpp")
+SRCFILES    +=  $(shell find $(SOURCE_DIR) -name "*.asm")
 
 FP_FLAGS	?= -msoft-float
 ARCH_FLAGS	= -mthumb -mcpu=cortex-m3 $(FP_FLAGS) -mfix-cortex-m3-ldrd
@@ -103,19 +105,19 @@ libopencm3/lib/libopencm3_stm32f1.a:
 	$(MAKE) -C libopencm3 TARGETS=stm32/f1
 
 $(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.c
-	mkdir -p $(OBJ_DIR)
+	mkdir -p $(@D)
 	$(CC) $(TGT_CFLAGS) $(CFLAGS) $(TGT_CPPFLAGS) $(CPPFLAGS) -o $@ -c $^
 
 $(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.cxx
-	mkdir -p $(OBJ_DIR)
+	mkdir -p $(@D)
 	$(CXX) $(TGT_CXXFLAGS) $(CXXFLAGS) $(TGT_CPPFLAGS) $(CPPFLAGS) -o $@ -c $^
 
 $(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.cpp
-	mkdir -p $(OBJ_DIR)
+	mkdir -p $(@D)
 	$(CXX) $(TGT_CXXFLAGS) $(CXXFLAGS) $(TGT_CPPFLAGS) $(CPPFLAGS) -o $@ -c $^
 
 $(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.asm
-	mkdir -p $(OBJ_DIR)
+	mkdir -p $(@D)
 	$(AS) $(ASFLAGS) -o $@.o -c $<
 
 clean:

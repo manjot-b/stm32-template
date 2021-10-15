@@ -8,7 +8,7 @@
 PREFIX		?= arm-none-eabi
 
 ROOT_DIR			:= $(abspath $(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
-OPENCM3_DIR			:= $(ROOT_DIR)/libopencm3
+OPENCM3_DIR			:= $(abspath libopencm3)
 FREERTOS_DIR		:= $(abspath freertos)
 FREERTOS_PORT_DIR	:= $(FREERTOS_DIR)/portable/GCC/ARM_CM3
 FREERTOS_HEAP_DIR	:= $(FREERTOS_DIR)/portable/MemMang
@@ -138,19 +138,19 @@ $(FREERTOS_OBJ_DIR)/%.o: $(FREERTOS_DIR)/%.c
 	mkdir -p $(@D)
 	$(CC) $(TGT_CFLAGS) $(CFLAGS) $(TGT_CPPFLAGS) $(CPPFLAGS) -o $@ -c $^
 
-$(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.c
+$(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.c libopencm3
 	mkdir -p $(@D)
-	$(CC) $(TGT_CFLAGS) $(CFLAGS) $(TGT_CPPFLAGS) $(CPPFLAGS) -o $@ -c $^
+	$(CC) $(TGT_CFLAGS) $(CFLAGS) $(TGT_CPPFLAGS) $(CPPFLAGS) -o $@ -c $<
 
-$(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.cxx
+$(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.cxx libopencm3
 	mkdir -p $(@D)
-	$(CXX) $(TGT_CXXFLAGS) $(CXXFLAGS) $(TGT_CPPFLAGS) $(CPPFLAGS) -o $@ -c $^
+	$(CXX) $(TGT_CXXFLAGS) $(CXXFLAGS) $(TGT_CPPFLAGS) $(CPPFLAGS) -o $@ -c $<
 
-$(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.cpp
+$(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.cpp libopencm3
 	mkdir -p $(@D)
-	$(CXX) $(TGT_CXXFLAGS) $(CXXFLAGS) $(TGT_CPPFLAGS) $(CPPFLAGS) -o $@ -c $^
+	$(CXX) $(TGT_CXXFLAGS) $(CXXFLAGS) $(TGT_CPPFLAGS) $(CPPFLAGS) -o $@ -c $<
 
-$(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.asm
+$(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.asm libopencm3
 	mkdir -p $(@D)
 	$(AS) $(ASFLAGS) -o $@.o -c $<
 

@@ -63,8 +63,6 @@ CSTD		?= -std=c99
 TEMP1 		= $(patsubst $(SOURCE_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCFILES))
 TEMP2		= $(patsubst $(SOURCE_DIR)/%.asm,$(OBJ_DIR)/%.o,$(TEMP1))
 TEMP3 		= $(patsubst $(SOURCE_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(TEMP2))
-#TEMP4 		= $(patsubst $(FREERTOS_PORT_DIR)/%.c,$(OBJ_DIR)/%.o,$(TEMP3))
-#TEMP5 		= $(patsubst $(FREERTOS_HEAP_DIR)/%.c,$(OBJ_DIR)/%.o,$(TEMP4))
 OBJS 		= $(patsubst $(FREERTOS_DIR)/%.c,$(FREERTOS_OBJ_DIR)/%.o,$(TEMP3))
 
 LDSCRIPT	?= stm32f103c8t6.ld

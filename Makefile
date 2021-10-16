@@ -160,11 +160,22 @@ clean:
 cleanall: clean
 	$(MAKE) -C libopencm3 clean
 
-# Flash 64k Device
-flash:	$(BINARY_DIR)/$(BINARY).bin
+# Flash using openocd via gdb.
+flash: $(BINARY_DIR)/$(BINARY).elf
+	openocd -f interface/stlink.cfg -f board/stm32f103c8_blue_pill.cfg &
+	$(GDB) -q -ex 'target extended-remote localhost:3333' \
+		-ex 'monitor reset halt' \
+		-ex 'monitor flash write_image erase $<' \
+		-ex 'monitor resume' \
+		-ex 'monitor shutdown' \
+		-ex 'detach' \
+		-ex 'q'
+
+# Flash 64k Device using st-flash command.
+flash-stlink:	$(BINARY_DIR)/$(BINARY).bin
 	$(STFLASH) $(FLASHSIZE) write $^ 0x8000000
 
-# Flash 128k Device
+# Flash 128k Device using st-flash command.
 bigflash:	$(BINARY_DIR)/$(BINARY).bin
 	$(STFLASH) --flash=128k $(FLASHSIZE) write $^ 0x8000000
 

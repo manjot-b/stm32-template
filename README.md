@@ -1,5 +1,5 @@
 # Overview
-A simple starter template project that joins together [FreeRTOS](https://github.com/FreeRTOS/FreeRTOS-Kernel) and [libopencm3]() to blink an LED. 
+A simple starter template project that joins together [FreeRTOS](https://github.com/FreeRTOS/FreeRTOS-Kernel) and [libopencm3](https://github.com/libopencm3/libopencm3) to blink an LED. 
 
 Most of the file were either taken from or adapted from Warren Gay's [stm32f103c8t6 repo](https://github.com/ve3wwg/stm32f103c8t6) and the [libopencm3-template](https://github.com/libopencm3/libopencm3-template) repo.
 
